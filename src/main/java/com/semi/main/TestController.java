@@ -11,7 +11,7 @@ public class TestController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home() throws Exception{
 		
-		return "home";
+		return "main";
 	}
 
 		@RequestMapping(value = "/ex1", method = RequestMethod.GET)

@@ -13,6 +13,15 @@ public class MemberDAO {
 	private final String NAMESPACE = "com.semi.main.member.MemberDAO.";
 	
 	
+	// login
+	public MemberDTO getLogin(MemberDTO memberDTO) throws Exception{
+		
+		System.out.println("DAO 시작");
+		
+		return sqlSession.selectOne(NAMESPACE+"getLogin", memberDTO);
+	}
+	
+	
 
 	
 }

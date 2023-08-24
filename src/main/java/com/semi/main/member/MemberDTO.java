@@ -25,6 +25,10 @@ public class MemberDTO {
 	
 	private Date accountDate;
 	
+	private String intro;
+	
+	private Long statusNo;
+	
 	
 	/* JOIN절에 따른 추가 컬럼 */
 	
@@ -111,6 +115,24 @@ public class MemberDTO {
 	public void setRoles(List<RoleDTO> roles) {
 		this.roles = roles;
 	}
+
+	public String getIntro() {
+		return intro;
+	}
+
+	public Long getStatusNo() {
+		return statusNo;
+	}
+
+	public void setIntro(String intro) {
+		this.intro = intro;
+	}
+
+	public void setStatusNo(Long statusNo) {
+		this.statusNo = statusNo;
+	}
+	
+	
 	
 	
 	
