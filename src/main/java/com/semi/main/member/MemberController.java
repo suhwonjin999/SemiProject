@@ -1,5 +1,9 @@
 package com.semi.main.member;
 
+import java.math.BigInteger;
+import java.net.URLEncoder;
+import java.security.SecureRandom;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -17,6 +21,41 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService memberService;
+	
+
+	/** 네이버 로그인 API 연동 */
+	
+	@GetMapping("callback")
+	public String naverCallback(String state) throws Exception{
+		System.out.println(state); // nullpoint
+		state = naverConnect(null);
+		System.out.println(state);
+		return state;
+	}
+	
+	@GetMapping("naver/login")
+	public String naverConnect(HttpSession session) throws Exception{
+		
+		//애플리케이션 클라이언트 아이디값";
+		String clientId = "r6eVt2waeuOw7uHsH9OU";
+	    String redirectURI = URLEncoder.encode("http://localhost:82/member/callback", "UTF-8");
+		
+		//state용 난수 생성
+		SecureRandom random = new SecureRandom();
+		
+		// 상태 토큰으로 사용할 랜덤 문자열 생성
+		String state = new BigInteger(130, random).toString(32);
+		
+		// 세션에 상태 토큰을 저장
+		session.setAttribute("state", state);
+		
+		// redirect
+		StringBuffer url = new StringBuffer("https://nid.naver.com/oauth2.0/authorize?response_type=code");
+		url.append("/oauth2.0/authorize?");
+		System.out.println(url);
+		
+		return "redirect:" + url;
+	}
 	
 	/** 로그인 FORM 이동 */
 	@GetMapping("login")
@@ -39,8 +78,8 @@ public class MemberController {
 		*/
 		
 		System.out.println("null인지 확인 :"+memberDTO);
-		System.out.println("아이디 :"+memberDTO.getUserId());
-		System.out.println("회원상태 :"+memberDTO.getStatusNo());
+//		System.out.println("아이디 :"+memberDTO.getUserId());
+//		System.out.println("회원상태 :"+memberDTO.getStatusNo());
 		
 		// request에 있는 파라미터를 session에 넣음
 		HttpSession session = request.getSession();
